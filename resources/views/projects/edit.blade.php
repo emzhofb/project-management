@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Project</title>
+    <link rel="stylesheet" href="{{ asset('css/edit_project.css') }}">
+</head>
+<body>
+    <h1>Edit Project</h1>
+	<a href="{{ route('projects.index') }}" class="btn btn-back">Back to Projects</a>
+	
+    <form action="{{ route('projects.update', $project->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+        <label for="name">Project Name:</label>
+        <input type="text" id="name" name="name" value="{{ $project->name }}" required>
+        
+        <label for="description">Description:</label>
+        <textarea id="description" name="description">{{ $project->description }}</textarea>
+        
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" value="{{ $project->start_date }}" required>
+        
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" value="{{ $project->end_date }}" required>
+        
+        <button type="submit">Update Project</button>
+    </form>
+</body>
+</html>

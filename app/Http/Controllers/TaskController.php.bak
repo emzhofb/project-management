@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Project;
+use App\Models\Task;
+use Illuminate\Http\Request;
+
+class TaskController extends Controller
+{
+    public function store(Request $request, Project $project)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'status' => 'required|in:pending,in_progress,completed',
+        ]);
+
+        $project->tasks()->create($request->all());
+        return redirect()->route('projects.show', $project->id);
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,in_progress,completed',
+        ]);
+
+        $task->update($request->all());
+        return redirect()->back();
+    }
+
+    public function destroy(Task $task)
+    {
+        $task->delete();
+        return redirect()->back();
+    }
+}
